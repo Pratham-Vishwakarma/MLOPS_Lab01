@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request
 import numpy as np
 from sklearn.linear_model import LinearRegression
 
@@ -18,7 +18,7 @@ def home():
 def predict():
     value = float(request.args.get("x"))
     prediction = model.predict([[value]])
-    return jsonify({"prediction": float(prediction[0])})
+    return f"Prediction: {prediction[0]}"
 
 if __name__ == "__main__":
     app.run()
