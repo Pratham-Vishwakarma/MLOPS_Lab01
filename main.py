@@ -1,5 +1,8 @@
+from flask import Flask, request, jsonify
 import numpy as np
 from sklearn.linear_model import LinearRegression
+
+app = Flask(__name__)
 
 X = np.array([[1],[2],[3],[4]])
 y = np.array([2,4,6,8])
@@ -7,6 +10,15 @@ y = np.array([2,4,6,8])
 model = LinearRegression()
 model.fit(X,y)
 
-prediction = model.predict([[5]])
+@app.route("/")
+def home():
+    return "ML Model API Running"
 
-print("Prediction:", prediction[0])
+@app.route("/predict")
+def predict():
+    value = float(request.args.get("x"))
+    prediction = model.predict([[value]])
+    return jsonify({"prediction": float(prediction[0])})
+
+if __name__ == "__main__":
+    app.run()
