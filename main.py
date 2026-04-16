@@ -1,6 +1,7 @@
-from flask import Flask, request
+import os
 import numpy as np
 from sklearn.linear_model import LinearRegression
+from flask import Flask, request
 
 app = Flask(__name__)
 
@@ -21,4 +22,5 @@ def predict():
     return f"Prediction: {prediction[0]}"
 
 if __name__ == "__main__":
-    app.run()
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
